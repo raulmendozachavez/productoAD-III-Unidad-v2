@@ -214,7 +214,7 @@
 
                 @if(method_exists($mascotas, 'hasPages') && $mascotas->hasPages())
                     <div style="margin-top: 1rem; display: flex; justify-content: center;">
-                        {{ $mascotas->links() }}
+                        {{ $mascotas->links('vendor.pagination.green') }}
                     </div>
                 @endif
 

@@ -227,7 +227,7 @@
     <div class="pagination-info">
         Mostrando {{ $auditorias->firstItem() ?? 0 }} a {{ $auditorias->lastItem() ?? 0 }} de {{ $auditorias->total() }} registros
     </div>
-    {{ $auditorias->links() }}
+    {{ $auditorias->links('vendor.pagination.green') }}
 </div>
 
                 <!-- Modales de Detalle -->

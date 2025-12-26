@@ -48,7 +48,7 @@
 
         @if(method_exists($productos, 'hasPages') && $productos->hasPages())
             <div style="margin-top: 2rem; display: flex; justify-content: center;">
-                {{ $productos->links() }}
+                {{ $productos->links('vendor.pagination.green') }}
             </div>
         @endif
 

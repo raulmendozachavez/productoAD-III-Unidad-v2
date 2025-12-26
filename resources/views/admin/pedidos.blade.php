@@ -112,7 +112,7 @@
 
                 @if(method_exists($pedidos, 'hasPages') && $pedidos->hasPages())
                     <div style="margin-top: 1rem; display: flex; justify-content: center;">
-                        {{ $pedidos->links() }}
+                        {{ $pedidos->links('vendor.pagination.green') }}
                     </div>
                 @endif
             </div>

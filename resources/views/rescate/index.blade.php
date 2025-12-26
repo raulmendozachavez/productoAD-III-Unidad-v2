@@ -75,7 +75,7 @@
 
         @if(method_exists($casos, 'hasPages') && $casos->hasPages())
             <div style="margin-top: 2rem; display: flex; justify-content: center;">
-                {{ $casos->links() }}
+                {{ $casos->links('vendor.pagination.green') }}
             </div>
         @endif
 

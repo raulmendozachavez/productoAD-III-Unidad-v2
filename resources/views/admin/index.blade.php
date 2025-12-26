@@ -126,7 +126,7 @@
 
                     @if(method_exists($ultimas_adopciones, 'hasPages') && $ultimas_adopciones->hasPages())
                         <div style="margin-top: 1rem; display: flex; justify-content: center;">
-                            {{ $ultimas_adopciones->appends(['pedidos_page' => request('pedidos_page')])->links() }}
+                            {{ $ultimas_adopciones->appends(['pedidos_page' => request('pedidos_page')])->links('vendor.pagination.green') }}
                         </div>
                     @endif
                 @endif
@@ -167,7 +167,7 @@
 
                     @if(method_exists($ultimos_pedidos, 'hasPages') && $ultimos_pedidos->hasPages())
                         <div style="margin-top: 1rem; display: flex; justify-content: center;">
-                            {{ $ultimos_pedidos->appends(['adopciones_page' => request('adopciones_page')])->links() }}
+                            {{ $ultimos_pedidos->appends(['adopciones_page' => request('adopciones_page')])->links('vendor.pagination.green') }}
                         </div>
                     @endif
                 @endif

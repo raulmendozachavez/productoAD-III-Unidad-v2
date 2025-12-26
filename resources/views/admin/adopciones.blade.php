@@ -158,7 +158,7 @@
 
                 @if(method_exists($adopciones, 'hasPages') && $adopciones->hasPages())
                     <div style="margin-top: 1rem; display: flex; justify-content: center;">
-                        {{ $adopciones->links() }}
+                        {{ $adopciones->links('vendor.pagination.green') }}
                     </div>
                 @endif
             </div>
