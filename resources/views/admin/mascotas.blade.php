@@ -212,6 +212,12 @@
                     </tbody>
                 </table>
 
+                @if(method_exists($mascotas, 'hasPages') && $mascotas->hasPages())
+                    <div style="margin-top: 1rem; display: flex; justify-content: center;">
+                        {{ $mascotas->links() }}
+                    </div>
+                @endif
+
                 <!-- Modal único reutilizable para editar -->
                 <div id="modal-editar-mascota" class="modal-overlay" style="display:none;">
                     <div class="modal-content">

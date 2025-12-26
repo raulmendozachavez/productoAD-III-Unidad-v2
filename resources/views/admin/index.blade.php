@@ -92,7 +92,7 @@
             <!-- Últimas Adopciones -->
             <div class="recent-section">
                 <h2>📋 Últimas Solicitudes de Adopción</h2>
-                @if($ultimas_adopciones->isEmpty())
+                @if(count($ultimas_adopciones) === 0)
                     <p>No hay solicitudes de adopción recientes.</p>
                 @else
                     <table>
@@ -123,13 +123,19 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    @if(method_exists($ultimas_adopciones, 'hasPages') && $ultimas_adopciones->hasPages())
+                        <div style="margin-top: 1rem; display: flex; justify-content: center;">
+                            {{ $ultimas_adopciones->appends(['pedidos_page' => request('pedidos_page')])->links() }}
+                        </div>
+                    @endif
                 @endif
             </div>
 
             <!-- Últimos Pedidos -->
             <div class="recent-section">
                 <h2>🛒 Últimos Pedidos</h2>
-                @if($ultimos_pedidos->isEmpty())
+                @if(count($ultimos_pedidos) === 0)
                     <p>No hay pedidos recientes.</p>
                 @else
                     <table>
@@ -158,6 +164,12 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    @if(method_exists($ultimos_pedidos, 'hasPages') && $ultimos_pedidos->hasPages())
+                        <div style="margin-top: 1rem; display: flex; justify-content: center;">
+                            {{ $ultimos_pedidos->appends(['adopciones_page' => request('adopciones_page')])->links() }}
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>

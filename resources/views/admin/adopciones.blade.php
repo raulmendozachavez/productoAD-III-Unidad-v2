@@ -150,11 +150,17 @@
                                 </td>
                             </tr>
                         @endforeach
-                        @if($adopciones->isEmpty())
+                        @if(count($adopciones) === 0)
                             <tr><td colspan="7" style="text-align:center; padding:1rem;">No hay adopciones</td></tr>
                         @endif
                     </tbody>
                 </table>
+
+                @if(method_exists($adopciones, 'hasPages') && $adopciones->hasPages())
+                    <div style="margin-top: 1rem; display: flex; justify-content: center;">
+                        {{ $adopciones->links() }}
+                    </div>
+                @endif
             </div>
         </div>
     </main>

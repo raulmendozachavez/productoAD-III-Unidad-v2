@@ -104,11 +104,17 @@
                                 </td>
                             </tr>
                         @endforeach
-                        @if($pedidos->isEmpty())
+                        @if(count($pedidos) === 0)
                             <tr><td colspan="6" style="text-align:center; padding:1rem;">No hay pedidos</td></tr>
                         @endif
                     </tbody>
                 </table>
+
+                @if(method_exists($pedidos, 'hasPages') && $pedidos->hasPages())
+                    <div style="margin-top: 1rem; display: flex; justify-content: center;">
+                        {{ $pedidos->links() }}
+                    </div>
+                @endif
             </div>
         </div>
     </main>

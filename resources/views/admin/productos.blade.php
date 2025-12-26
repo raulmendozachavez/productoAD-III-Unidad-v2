@@ -164,6 +164,12 @@
                     </tbody>
                 </table>
 
+                @if(method_exists($productos, 'hasPages') && $productos->hasPages())
+                    <div style="margin-top: 1rem; display: flex; justify-content: center;">
+                        {{ $productos->links() }}
+                    </div>
+                @endif
+
                 @foreach($productos as $p)
                     <div id="modal-editar-prod-{{ $p->id_producto }}" class="modal-overlay" style="display:none;">
                         <div class="modal-content">

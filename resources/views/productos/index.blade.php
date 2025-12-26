@@ -46,7 +46,13 @@
             @endforeach
         </div>
 
-        @if($productos->isEmpty())
+        @if(method_exists($productos, 'hasPages') && $productos->hasPages())
+            <div style="margin-top: 2rem; display: flex; justify-content: center;">
+                {{ $productos->links() }}
+            </div>
+        @endif
+
+        @if(count($productos) === 0)
             <div style="text-align: center; padding: 4rem 2rem;">
                 <h2>No hay productos disponibles en este momento 😢</h2>
                 <p>Estamos reabasteciendo nuestro inventario. Por favor vuelve pronto.</p>

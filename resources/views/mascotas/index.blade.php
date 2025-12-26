@@ -38,7 +38,13 @@
             @endforeach
         </div>
 
-        @if($mascotas->isEmpty())
+        @if(method_exists($mascotas, 'hasPages') && $mascotas->hasPages())
+            <div style="margin-top: 2rem; display: flex; justify-content: center;">
+                {{ $mascotas->links() }}
+            </div>
+        @endif
+
+        @if(count($mascotas) === 0)
             <div style="text-align: center; padding: 4rem 2rem;">
                 <h2>No hay mascotas disponibles en este momento 😢</h2>
                 <p>Por favor revisa más tarde o contacta con el refugio.</p>

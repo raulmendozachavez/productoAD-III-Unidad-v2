@@ -73,7 +73,13 @@
             @endforeach
         </div>
 
-        @if($casos->isEmpty())
+        @if(method_exists($casos, 'hasPages') && $casos->hasPages())
+            <div style="margin-top: 2rem; display: flex; justify-content: center;">
+                {{ $casos->links() }}
+            </div>
+        @endif
+
+        @if(count($casos) === 0)
             <div style="text-align: center; padding: 4rem 2rem; background: white; border-radius: 12px;">
                 <h2>No hay casos de rescate registrados en este momento</h2>
                 <p>Afortunadamente, todos nuestros rescatados han encontrado hogar 💚</p>

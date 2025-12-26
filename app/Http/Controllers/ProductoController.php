@@ -11,7 +11,7 @@ class ProductoController extends Controller
     {
         $productos = Producto::orderBy('categoria')
             ->orderBy('nombre')
-            ->get();
+            ->paginate(10);
         
         return view('productos.index', compact('productos'));
     }

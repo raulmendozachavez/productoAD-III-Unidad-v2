@@ -12,7 +12,7 @@ class RescateController extends Controller
         $casos = CasoRescate::with('mascota')
             ->orderByRaw("FIELD(urgencia, 'alta', 'media', 'baja')")
             ->orderBy('fecha_rescate', 'desc')
-            ->get();
+            ->paginate(10);
         
         return view('rescate.index', compact('casos'));
     }

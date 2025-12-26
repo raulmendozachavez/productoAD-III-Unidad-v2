@@ -11,7 +11,7 @@ class MascotaController extends Controller
     {
         $mascotas = Mascota::where('estado', 'disponible')
             ->orderBy('fecha_ingreso', 'desc')
-            ->get();
+            ->paginate(10);
         
         return view('mascotas.index', compact('mascotas'));
     }

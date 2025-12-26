@@ -46,13 +46,11 @@ class AdminController extends Controller
 
         $ultimas_adopciones = Adopcion::with(['usuario', 'mascota'])
             ->orderBy('fecha_solicitud', 'desc')
-            ->limit(5)
-            ->get();
+            ->paginate(5, ['*'], 'adopciones_page');
 
         $ultimos_pedidos = Pedido::with('usuario')
             ->orderBy('fecha_pedido', 'desc')
-            ->limit(5)
-            ->get();
+            ->paginate(5, ['*'], 'pedidos_page');
 
         return view('admin.index', compact('stats', 'ultimas_adopciones', 'ultimos_pedidos'));
     }
@@ -98,7 +96,7 @@ class AdminController extends Controller
 
         $pedidos = Pedido::with(['usuario', 'detallePedidos.producto'])
             ->orderBy('fecha_pedido', 'desc')
-            ->get();
+            ->paginate(10);
         return view('admin.pedidos', compact('pedidos'));
     }
 
@@ -108,7 +106,7 @@ class AdminController extends Controller
 
         $adopciones = Adopcion::with(['usuario', 'mascota'])
             ->orderBy('fecha_solicitud', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('admin.adopciones', compact('adopciones'));
     }
@@ -173,7 +171,7 @@ class AdminController extends Controller
 
         $productos = Producto::orderBy('categoria')
             ->orderBy('nombre')
-            ->get();
+            ->paginate(10);
         return view('admin.productos', compact('productos'));
     }
 
@@ -278,7 +276,9 @@ class AdminController extends Controller
     {
         Auditoria::registrar('ver_mascotas', 'mascotas', 'Acceso a listado de mascotas');
 
-        $mascotas = Mascota::with('casosRescate')->orderBy('fecha_ingreso', 'desc')->get();
+        $mascotas = Mascota::with('casosRescate')
+            ->orderBy('fecha_ingreso', 'desc')
+            ->paginate(10);
         return view('admin.mascotas', compact('mascotas'));
     }
 
