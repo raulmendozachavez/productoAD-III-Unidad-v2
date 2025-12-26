@@ -17,6 +17,10 @@ class AdopcionController extends Controller
 
     public function show($id)
     {
+        if (Auth::user() && Auth::user()->isAdmin()) {
+            return redirect()->route('mascotas.index')->with('toast_error', 'Función no válida para admin');
+        }
+
         $mascota = Mascota::findOrFail($id);
         $usuario = Auth::user();
         
@@ -25,6 +29,10 @@ class AdopcionController extends Controller
 
     public function store(Request $request)
     {
+        if (Auth::user() && Auth::user()->isAdmin()) {
+            return back()->with('toast_error', 'Función no válida para admin');
+        }
+
         $request->validate([
             'id_mascota' => 'required|exists:mascotas,id_mascota',
             'acepta_terminos' => 'required',

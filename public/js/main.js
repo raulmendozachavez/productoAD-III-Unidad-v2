@@ -27,6 +27,14 @@ function getBaseUrl() {
     return document.querySelector('meta[name="app-url"]')?.getAttribute('content') || '';
 }
 
+function getUserRole() {
+    return document.querySelector('meta[name="user-role"]')?.getAttribute('content') || '';
+}
+
+function isAdminUser() {
+    return getUserRole() === 'admin';
+}
+
 function actualizarContadorCarrito() {
     fetch(`${getBaseUrl()}/carrito/count`)
         .then(response => response.json())
@@ -70,6 +78,11 @@ function mostrarNotificacion(mensaje, tipo = 'success') {
 // AGREGAR AL CARRITO (desde store.php)
 // ========================================
 function agregarAlCarrito(idProducto, nombre, precio, imagen) {
+    if (isAdminUser()) {
+        mostrarNotificacion('❌ Función no válida para admin', 'error');
+        return;
+    }
+
     fetch(`${getBaseUrl()}/carrito`, {
         method: 'POST',
         headers: {
@@ -127,6 +140,19 @@ function agregarAlCarrito(idProducto, nombre, precio, imagen) {
             mostrarNotificacion('❌ Error de conexión', 'error');
         });
 }
+
+// ========================================
+// BLOQUEO DE ACCIONES PARA ADMIN (UI)
+// ========================================
+document.addEventListener('click', function (e) {
+    const adoptLink = e.target.closest('a.btn-adoptar');
+    if (!adoptLink) return;
+
+    if (isAdminUser()) {
+        e.preventDefault();
+        mostrarNotificacion('❌ Función no válida para admin', 'error');
+    }
+});
 
 // ========================================
 // FILTROS DE MASCOTAS/PRODUCTOS

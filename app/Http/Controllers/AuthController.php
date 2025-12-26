@@ -104,7 +104,7 @@ class AuthController extends Controller
                 'min:5',
                 'max:20',
                 'confirmed',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{5,20}$/'
             ],
         ], [
             'nombre_usuario.required' => 'El nombre de usuario es obligatorio',
@@ -117,7 +117,7 @@ class AuthController extends Controller
             'password.min' => 'La contraseña debe tener al menos 5 caracteres',
             'password.max' => 'La contraseña no puede tener más de 20 caracteres',
             'password.confirmed' => 'Las contraseñas no coinciden',
-            'password.regex' => 'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial (@$!%*?&)',
+            'password.regex' => 'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial',
             'telefono.digits_between' => 'Ingrese un número de teléfono válido (solo números, entre 9 y 15 dígitos)',
         ]);
 

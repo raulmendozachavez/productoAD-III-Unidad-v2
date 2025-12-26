@@ -83,10 +83,12 @@
                         <div class="form-group">
                             <label>Contraseña: *</label>
                             <input type="password" name="password" required 
-                                   placeholder="Mínimo 5 caracteres"
+                                   placeholder="5-20 caracteres"
                                    minlength="5"
-                                   pattern=".{5,}"
-                                   title="La contraseña debe tener al menos 5 caracteres">
+                                   maxlength="20"
+                                   pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{5,20}"
+                                   title="La contraseña debe tener 5-20 caracteres e incluir al menos una mayúscula, un número y un carácter especial">
+                            <small style="color: #666; display: block; margin-top: .25rem;">Debe incluir al menos una mayúscula, una minúscula, un número y un carácter especial.</small>
                         </div>
 
                         <div class="form-group">
@@ -94,8 +96,9 @@
                             <input type="password" name="password_confirmation" required 
                                    placeholder="Repite tu contraseña"
                                    minlength="5"
-                                   pattern=".{5,}"
-                                   title="La contraseña debe tener al menos 5 caracteres">
+                                   maxlength="20"
+                                   pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{5,20}"
+                                   title="La contraseña debe tener 5-20 caracteres e incluir al menos una mayúscula, una minúscula, un número y un carácter especial">
                         </div>
 
                         <button type="submit" class="btn-submit">

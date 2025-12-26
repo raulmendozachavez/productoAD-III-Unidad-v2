@@ -23,6 +23,10 @@ class CheckoutController extends Controller
     public function index()
     {
         $usuario = Auth::user();
+        if ($usuario && $usuario->isAdmin()) {
+            return redirect()->route('home')->with('toast_error', 'Función no válida para admin');
+        }
+
         $carrito = Carrito::where('id_usuario', $usuario->id_usuario)
             ->with('producto')
             ->get();
@@ -43,6 +47,10 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $usuario = Auth::user();
+        if ($usuario && $usuario->isAdmin()) {
+            return redirect()->route('home')->with('toast_error', 'Función no válida para admin');
+        }
+
         $carrito = Carrito::where('id_usuario', $usuario->id_usuario)
             ->with('producto')
             ->get();

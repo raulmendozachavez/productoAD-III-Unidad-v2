@@ -11,6 +11,17 @@ document.addEventListener('DOMContentLoaded', function() {
         return password.length >= 5;
     }
 
+    // Función para validar contraseña (registro)
+    function isValidRegisterPassword(password) {
+        if (password.length < 5 || password.length > 20) return false;
+
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSpecial = /[^A-Za-z0-9]/.test(password);
+
+        return hasUppercase && hasNumber && hasSpecial;
+    }
+
     // Validación para el formulario de registro
     const registerForm = document.querySelector('form[action*="register"]');
     if (registerForm) {
@@ -27,9 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Validar contraseña
-            if (!isValidPassword(password.value)) {
+            if (!isValidRegisterPassword(password.value)) {
                 e.preventDefault();
-                showError('La contraseña debe tener al menos 5 caracteres');
+                showError('La contraseña debe tener 5-20 caracteres e incluir al menos una mayúscula, un número y un carácter especial');
                 password.focus();
                 return false;
             }
@@ -114,7 +125,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordInputs = document.querySelectorAll('input[type="password"]');
     passwordInputs.forEach(input => {
         input.addEventListener('blur', function() {
-            if (this.value && !isValidPassword(this.value)) {
+            const form = this.closest('form');
+            const isRegister = form && form.getAttribute('action') && form.getAttribute('action').includes('register');
+            const valid = isRegister ? isValidRegisterPassword(this.value) : isValidPassword(this.value);
+
+            if (this.value && !valid) {
                 this.style.borderColor = '#d9534f';
             } else {
                 this.style.borderColor = '';

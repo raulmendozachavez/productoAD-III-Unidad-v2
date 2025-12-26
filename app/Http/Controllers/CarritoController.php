@@ -12,6 +12,10 @@ class CarritoController extends Controller
 {
     public function index()
     {
+        if (Auth::user() && Auth::user()->isAdmin()) {
+            return redirect()->route('home')->with('toast_error', 'Función no válida para admin');
+        }
+
         $carrito = Carrito::where('id_usuario', Auth::id())
             ->with('producto')
             ->get();
@@ -47,6 +51,13 @@ class CarritoController extends Controller
                 'require_login' => true,
                 'message' => 'Debes iniciar sesión'
             ], 401);
+        }
+
+        if (Auth::user() && Auth::user()->isAdmin()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Función no válida para admin'
+            ], 403);
         }
 
         $request->validate([
@@ -131,6 +142,13 @@ class CarritoController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (Auth::user() && Auth::user()->isAdmin()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Función no válida para admin'
+            ], 403);
+        }
+
         $request->validate([
             'cantidad' => 'required|integer|min:1',
         ]);
@@ -171,6 +189,13 @@ class CarritoController extends Controller
 
     public function destroy($id)
     {
+        if (Auth::user() && Auth::user()->isAdmin()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Función no válida para admin'
+            ], 403);
+        }
+
         $carritoItem = Carrito::where('id_carrito', $id)
             ->where('id_usuario', Auth::id())
             ->with('producto')
@@ -199,6 +224,13 @@ class CarritoController extends Controller
 
     public function getCart()
     {
+        if (Auth::user() && Auth::user()->isAdmin()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Función no válida para admin'
+            ], 403);
+        }
+
         $carrito = Carrito::where('id_usuario', Auth::id())
             ->with('producto')
             ->get()
