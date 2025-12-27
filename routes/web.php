@@ -69,6 +69,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     
     // Mascotas
     Route::get('/mascotas', [App\Http\Controllers\AdminController::class, 'mascotas'])->name('mascotas');
+    Route::get('/mascotas/{id}/data', [App\Http\Controllers\AdminController::class, 'mascotaData'])->name('mascotas.data');
     Route::post('/mascotas', [App\Http\Controllers\AdminController::class, 'crearMascota'])->name('mascotas.store');
     Route::put('/mascotas/{id}', [App\Http\Controllers\AdminController::class, 'actualizarMascota'])->name('mascotas.update');
     Route::delete('/mascotas/{id}', [App\Http\Controllers\AdminController::class, 'eliminarMascota'])->name('mascotas.destroy');

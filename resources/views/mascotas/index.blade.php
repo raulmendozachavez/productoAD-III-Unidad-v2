@@ -24,7 +24,7 @@
             @foreach($mascotas as $mascota)
                 <div class="mascota-card" data-tipo="{{ $mascota->tipo }}">
                     <div class="mascota-image">
-                        <img src="{{ asset('images/mascotas/' . $mascota->imagen) }}" alt="{{ $mascota->nombre }}">
+                        <img src="{{ asset('images/mascotas/' . $mascota->imagen) }}" alt="{{ $mascota->nombre }}" loading="lazy" decoding="async">
                     </div>
                     <div class="mascota-content">
                         <h3>{{ $mascota->nombre }}</h3>

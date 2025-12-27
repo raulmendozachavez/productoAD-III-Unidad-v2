@@ -10,6 +10,7 @@ use App\Models\Producto;
 use App\Models\Pedido;
 use App\Models\DetallePedido;
 use App\Models\Auditoria;
+use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -276,10 +277,48 @@ class AdminController extends Controller
     {
         Auditoria::registrar('ver_mascotas', 'mascotas', 'Acceso a listado de mascotas');
 
-        $mascotas = Mascota::with('casosRescate')
+        $mascotas = Mascota::select([
+                'id_mascota',
+                'imagen',
+                'nombre',
+                'tipo',
+                'raza',
+                'edad',
+                'estado',
+                'fecha_ingreso',
+            ])
             ->orderBy('fecha_ingreso', 'desc')
             ->paginate(10);
         return view('admin.mascotas', compact('mascotas'));
+    }
+
+    public function mascotaData($id)
+    {
+        $mascota = Mascota::with('casosRescate')
+            ->findOrFail($id);
+
+        $rescate = $mascota->casosRescate->first();
+
+        $fechaIngreso = $mascota->fecha_ingreso;
+        $fechaIngresoStr = $fechaIngreso instanceof CarbonInterface
+            ? $fechaIngreso->toDateString()
+            : (is_string($fechaIngreso) ? $fechaIngreso : '');
+
+        return response()->json([
+            'id' => $mascota->id_mascota,
+            'nombre' => $mascota->nombre,
+            'tipo' => $mascota->tipo,
+            'raza' => $mascota->raza ?? '',
+            'edad' => $mascota->edad ?? '',
+            'descripcion' => $mascota->descripcion ?? '',
+            'fecha_ingreso' => $fechaIngresoStr,
+            'es_rescate' => $mascota->es_rescate ? 1 : 0,
+            'estado' => $mascota->estado,
+            'urgencia' => $rescate ? ($rescate->urgencia ?? 'media') : 'media',
+            'tratamiento' => $rescate ? ($rescate->tratamiento ?? '') : '',
+            'situacion' => $rescate ? ($rescate->situacion ?? '') : '',
+            'historia' => $rescate ? ($rescate->historia ?? '') : '',
+        ]);
     }
 
     public function crearMascota(Request $request)

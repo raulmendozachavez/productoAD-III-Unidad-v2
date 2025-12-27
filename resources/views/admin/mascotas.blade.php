@@ -189,6 +189,7 @@
                                 <td>#{{ $m->id_mascota }}</td>
                                 <td>
                                     <img src="{{ asset('images/mascotas/' . $m->imagen) }}" alt="{{ $m->nombre }}"
+                                         loading="lazy" decoding="async"
                                          onerror="this.src='{{ asset('images/placeholder.jpg') }}'">
                                 </td>
                                 <td>{{ $m->nombre }}</td>
@@ -318,26 +319,6 @@
                 <script>
                     // Datos de las mascotas para el modal
                     const mascotasData = {};
-                    @foreach($mascotas as $m)
-                        @php 
-                            $res = $m->casosRescate->isEmpty() ? null : $m->casosRescate->first();
-                        @endphp
-                        mascotasData[{{ $m->id_mascota }}] = {
-                            id: {{ $m->id_mascota }},
-                            nombre: @json($m->nombre),
-                            tipo: @json($m->tipo),
-                            raza: @json($m->raza ?? ''),
-                            edad: @json($m->edad ?? ''),
-                            descripcion: @json($m->descripcion ?? ''),
-                            fecha_ingreso: @json($m->fecha_ingreso ? $m->fecha_ingreso->format('Y-m-d') : ''),
-                            es_rescate: {{ $m->es_rescate ? 1 : 0 }},
-                            estado: @json($m->estado),
-                            urgencia: @json($res ? $res->urgencia : 'media'),
-                            tratamiento: @json($res ? $res->tratamiento : ''),
-                            situacion: @json($res ? $res->situacion : ''),
-                            historia: @json($res ? $res->historia : '')
-                        };
-                    @endforeach
                 </script>
             </div>
         </div>
@@ -350,30 +331,42 @@
         }
 
         function abrirModalEditar(idMascota) {
-            const mascota = mascotasData[idMascota];
-            if (!mascota) return;
+            const url = '{{ route("admin.mascotas.data", ":id") }}'.replace(':id', idMascota);
 
-            // Llenar el formulario con los datos
-            document.getElementById('modal-editar-titulo').textContent = 'Editar Mascota #' + mascota.id;
-            document.getElementById('form-editar-mascota').action = '{{ route("admin.mascotas.update", ":id") }}'.replace(':id', mascota.id);
-            document.getElementById('edit-nombre').value = mascota.nombre || '';
-            document.getElementById('edit-tipo').value = mascota.tipo || 'perros';
-            document.getElementById('edit-raza').value = mascota.raza || '';
-            document.getElementById('edit-edad').value = mascota.edad || '';
-            document.getElementById('edit-descripcion').value = mascota.descripcion || '';
-            document.getElementById('edit-fecha-ingreso').value = mascota.fecha_ingreso || '';
-            document.getElementById('edit-es-rescate').value = mascota.es_rescate || 0;
-            document.getElementById('edit-estado').value = mascota.estado || 'disponible';
-            document.getElementById('edit-urgencia').value = mascota.urgencia || 'media';
-            document.getElementById('edit-tratamiento').value = mascota.tratamiento || '';
-            document.getElementById('edit-situacion').value = mascota.situacion || '';
-            document.getElementById('edit-historia').value = mascota.historia || '';
+            fetch(url, {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar la mascota');
+                }
+                return response.json();
+            })
+            .then(mascota => {
+                document.getElementById('modal-editar-titulo').textContent = 'Editar Mascota #' + mascota.id;
+                document.getElementById('form-editar-mascota').action = '{{ route("admin.mascotas.update", ":id") }}'.replace(':id', mascota.id);
+                document.getElementById('edit-nombre').value = mascota.nombre || '';
+                document.getElementById('edit-tipo').value = mascota.tipo || 'perros';
+                document.getElementById('edit-raza').value = mascota.raza || '';
+                document.getElementById('edit-edad').value = mascota.edad || '';
+                document.getElementById('edit-descripcion').value = mascota.descripcion || '';
+                document.getElementById('edit-fecha-ingreso').value = mascota.fecha_ingreso || '';
+                document.getElementById('edit-es-rescate').value = String(mascota.es_rescate ?? 0);
+                document.getElementById('edit-estado').value = mascota.estado || 'disponible';
+                document.getElementById('edit-urgencia').value = mascota.urgencia || 'media';
+                document.getElementById('edit-tratamiento').value = mascota.tratamiento || '';
+                document.getElementById('edit-situacion').value = mascota.situacion || '';
+                document.getElementById('edit-historia').value = mascota.historia || '';
 
-            // Mostrar/ocultar campos de rescate
-            toggleRescateFields('editar', mascota.es_rescate);
-
-            // Abrir el modal
-            abrirModal('modal-editar-mascota');
+                toggleRescateFields('editar', mascota.es_rescate);
+                abrirModal('modal-editar-mascota');
+            })
+            .catch(() => {
+                alert('No se pudo cargar la información de la mascota');
+            });
         }
     </script>
 
