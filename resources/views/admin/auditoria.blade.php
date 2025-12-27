@@ -222,13 +222,11 @@
                     </tbody>
                 </table>
 
-                <!-- Paginación -->
-                <div class="pagination-container">
-    <div class="pagination-info">
-        Mostrando {{ $auditorias->firstItem() ?? 0 }} a {{ $auditorias->lastItem() ?? 0 }} de {{ $auditorias->total() }} registros
-    </div>
-    {{ $auditorias->links('vendor.pagination.green') }}
-</div>
+                @if(method_exists($auditorias, 'hasPages') && $auditorias->hasPages())
+                    <div style="margin-top: 1rem; display: flex; justify-content: center;">
+                        {{ $auditorias->links('vendor.pagination.green') }}
+                    </div>
+                @endif
 
                 <!-- Modales de Detalle -->
                 @foreach($auditorias as $audit)

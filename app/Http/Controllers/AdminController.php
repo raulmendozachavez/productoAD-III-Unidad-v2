@@ -80,7 +80,7 @@ class AdminController extends Controller
             })
             ->orderBy('fecha_hora', 'desc');
 
-        $auditorias = $query->paginate(50);
+        $auditorias = $query->paginate(20);
 
         // Mantener los parámetros de filtro en la paginación
         if ($request->hasAny(['modulo', 'usuario', 'fecha_desde', 'fecha_hasta'])) {
