@@ -60,9 +60,9 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Contacto</h3>
-                    <p>📧 info@hogarfeliz.com</p>
-                    <p>📞 +51 123 456 789</p>
-                    <p>📍 Chimbote, Ancash, Perú</p>
+                    <p>📧 brighitorres@gmail.com</p>
+                    <p>📞 +51 922 103 362</p>
+                    <p>📍 Plaza Madre Campesina, Chimbote 02804, Perú</p>
                 </div>
                 <div class="footer-section">
                     <h3>Horarios</h3>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="footer-section">
                     <h3>Síguenos</h3>
-                    <p>Facebook | Instagram | Twitter</p>
+                    <p><a href="https://www.facebook.com/groups/2621825777833415/user/100007552326286/" target="_blank" style="color: inherit;">Facebook</a></p>
                 </div>
             </div>
             <p class="footer-bottom">

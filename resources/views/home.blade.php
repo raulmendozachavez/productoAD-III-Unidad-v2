@@ -2,6 +2,10 @@
 
 @section('title', 'Adopción de Mascotas - Sanando Huellitas')
 
+@push('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+@endpush
+
 @section('content')
 <!-- Video Hero Section -->
 <section class="hero-video">
@@ -29,7 +33,7 @@
                 <p>
                     <strong>Sanando Huellitas</strong> es una organización sin fines de
                     lucro dedicada al rescate, rehabilitación y adopción responsable
-                    de mascotas desde 2010. Nuestra misión es encontrar hogares
+                    de mascotas desde 2019. Nuestra misión es encontrar hogares
                     amorosos para animales abandonados y maltratados.
                 </p>
                 <p>
@@ -77,6 +81,17 @@
     </div>
 </section>
 
+<section class="featured-pets">
+    <div class="container">
+        <h2 class="section-title">Ubícanos</h2>
+        <p style="text-align: center; margin-bottom: 1.25rem; color: #333;">Chimbote, 02800, Perú</p>
+        <div id="refugio-map" style="height: 420px; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 26px rgba(4, 17, 34, 0.12);"></div>
+        <div style="display: flex; justify-content: center; margin-top: 1.25rem;">
+            <a class="btn-secondary" href="https://www.google.com/maps?q=-9.0799603102846,-78.55932654103958" target="_blank" rel="noopener">Cómo llegar</a>
+        </div>
+    </div>
+</section>
+
 <!-- Llamado a la acción -->
 <section class="cta-section">
     <div class="container">
@@ -91,6 +106,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>
     const video = document.querySelector('.hero-video-bg');
     
@@ -105,6 +121,26 @@
             }, 500);
         });
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const mapEl = document.getElementById('refugio-map');
+        if (!mapEl || typeof L === 'undefined') return;
+
+        const coords = [-9.079086, -78.559359];
+        const map = L.map('refugio-map', {
+            scrollWheelZoom: false,
+        }).setView(coords, 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        L.marker(coords)
+            .addTo(map)
+            .bindPopup('Sanando Huellitas - Refugio')
+            .openPopup();
+    });
 </script>
 @endpush
 

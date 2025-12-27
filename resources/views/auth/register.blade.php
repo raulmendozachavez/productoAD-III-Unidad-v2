@@ -67,14 +67,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Teléfono:</label>
+                            <label>Teléfono: *</label>
                             <input type="text" name="telefono" 
                                    placeholder="987654321"
                                    value="{{ old('telefono') }}">
                         </div>
 
                         <div class="form-group">
-                            <label>Dirección:</label>
+                            <label>Dirección: *</label>
                             <input type="text" name="direccion" 
                                    placeholder="Av. Los Olivos 123"
                                    value="{{ old('direccion') }}">
