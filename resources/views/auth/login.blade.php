@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sanando Huellitas</title>
     <link rel="stylesheet" href="{{ asset('css/auth-styles.css') }}">
-    <body class="login-body">
 </head>
-<body>
+<body class="login-body">
     <header class="header">
         <div class="container">
             <div class="logo">
